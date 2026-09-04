@@ -1,0 +1,33 @@
+{
+  "name": "patreon-downloader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "clean": "rm -rf ./dist/*",
+    "watch": "tsx build.ts watch",
+    "build": "tsx build.ts"
+  },
+  "keywords": [],
+  "type": "module",
+  "dependencies": {
+    "@js-temporal/polyfill": "^0.5.1",
+    "buffer": "^6.0.3",
+    "content-disposition": "^3.0.0",
+    "fflate": "^0.8.3",
+    "file-saver": "^2.0.5",
+    "nextjs-hydration-parser": "^0.1.0",
+    "react-server-dom-webpack": "^19.2.8",
+    "zod": "^4.5.4"
+  },
+  "devDependencies": {
+    "@types/file-saver": "^2.0.7",
+    "@types/node": "^26.4.0",
+    "@types/tampermonkey": "^5.5.0",
+    "tsx": "^4.23.13",
+    "typescript": "^7.0.2"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true
+  }
+}

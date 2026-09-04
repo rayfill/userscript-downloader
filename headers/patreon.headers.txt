@@ -1,0 +1,15 @@
+// ==UserScript==
+// @name         Patreon downloader
+// @namespace    https://patreon.com/
+// @version      {{version}}
+// @downloadURL  {{downloadUrl}}
+// @description  patreon downloader
+// @author       rayfill
+// @match        https://www.patreon.com/posts/*
+// @match        https://www.patreon.com/*/posts/*
+// @connect      patreonusercontent.com
+// @connect      patreon.com
+// @run-at       document-start
+// @grant        GM_xmlhttpRequest
+// @grant        unsafeWindow
+// ==/UserScript==
