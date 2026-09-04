@@ -15,6 +15,8 @@ async function doBuild(doBuildOptions: DoBuildOptions) {
 
   const options: BuildOptions = {
     bundle: true,
+    minify: true,
+    sourcemap: 'external',
     banner: {
       js: header
     },
@@ -94,6 +96,7 @@ async function doWatch(doBuildOptions: DoBuildOptions) {
 
   const options: BuildOptions = {
     bundle: true,
+    minify: false,
     banner: {
       js: header
     },
