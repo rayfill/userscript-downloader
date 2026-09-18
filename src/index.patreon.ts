@@ -10,6 +10,9 @@ import { Buffer } from 'buffer';
 
 
 async function getImageUrls(imgs: Array<HTMLImageElement>) {
+  if (imgs.length === 0) {
+    return [] as Array<string>;
+  }
   const urls: Array<string> = [];
   const delta = 100;
   for (const img of imgs) {
@@ -66,8 +69,9 @@ async function handle() {
   try {
     const parsed = parser(window);
 
+    console.log('imgs', parsed.imgs);
     const images = await getImageUrls(parsed.imgs);
-    console.log(parsed, images);
+    console.log('imageUrls', images);
 
     const imageFiles = await Promise.all(images.map(async (image) => {
       const file = await download(image);
@@ -91,8 +95,7 @@ async function handle() {
       return src.replaceAll(' ', '_');
     }
     const archiveName = toSafename(`${yyyymm}_${parsed.postId}_${replaceSpaces(parsed.title)}.zip`);
-
-    console.log(archiveName);
+    console.log(`archiveName: ${archiveName}`);
 
     const contents = {
       ...parsed,

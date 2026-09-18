@@ -143,6 +143,11 @@ async function main() {
       input: 'src/index.patreon.ts',
       output: 'patreon.user',
       headerPath: 'headers/patreon.headers.txt',
+    },
+    {
+      input: 'src/index.fanbox.ts',
+      output: 'fanbox.user',
+      headerPath: 'headers/fanbox.headers.txt',
     }
   ];
 

@@ -1,0 +1,17 @@
+// ==UserScript==
+// @name         Pixiv Fanbox downloader
+// @namespace    https://pixiv.fanbox.net/
+// @version      {{version}}
+// @description  pixiv fanbox article downloader
+// @downloadURL  {{downloadUrl}}
+// @author       rayfill
+// @match        https://*.fanbox.cc/*
+// @connect      pixiv.net
+// @connect      pximg.net
+// @connect      pixiv.pximg.net
+// @connect      fanbox.cc
+// @connect      download.fanbox.cc
+// @run-at       document-start
+// @grant        GM_xmlhttpRequest
+// @grant        unsafeWindow
+// ==/UserScript==
