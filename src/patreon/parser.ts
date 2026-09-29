@@ -14,17 +14,6 @@ export function parser(window: Window) {
     throw new Error('title element not found: div[data-tag="post-card"] h1 > div[data-is-key-element]');
   }
 
-  // creator id
-  const iconUrlPattern = /^https:\/\/[^.]+\.patreonusercontent\.com\/[0-9]+\/patreon-media\/p\/campaign\/([0-9]+)\/.*$/;
-  const ids = Array.from(window.document.head.querySelectorAll('link[href*="patreon-media/p/campaign/"]')).map((link) => {
-    const href = (link as HTMLLinkElement).href;
-    return href.replace(iconUrlPattern, "$1");
-  });
-  if (ids.length === 0) {
-    throw new Error('invalid icon urls');
-  }
-  const creatorId = ids[0];
-
   // post id
   const postIdPattern = /^\/.*\/posts\/.*?([0-9]+)$/;
   const currentUrl = new URL(window.location.href);
@@ -57,7 +46,6 @@ export function parser(window: Window) {
   const attachments = Array.from(article.querySelectorAll('a[href^="https://www.patreon.com/file?"][data-tag="post-attachment-link"]')) as Array<HTMLAnchorElement>;
 
   return {
-    creatorId: creatorId,
     postId: postId,
     postTime: postTime,
     title: titles[0]!.textContent,
