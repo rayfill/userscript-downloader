@@ -64,24 +64,24 @@ const blockType = z.union([
 
 const embedMapType = z.record(z.string(), z.object({}));
 
-const fileMapType = z.record(z.string(), fileType.extend({
+export const fileMapType = z.record(z.string(), fileType.extend({
   size: z.number().pipe(z.int().positive())
 }));
 
-const imageMapType = z.record(z.string(), imageType);
+export const imageMapType = z.record(z.string(), imageType);
 
 const coverType = z.object({
   type: z.string(),
   url: z.string(),
 });
 
-const embedPostUserType = z.object({
+export const embedPostUserType = z.object({
   iconUrl: z.string().pipe(z.url()),
   name: z.string(),
   userId: z.string(),
 });
 
-const embedPostInfoType = z.object({
+export const embedPostInfoType = z.object({
   cover: coverType,
   creatorId: z.string(),
   id: z.string(),
@@ -91,14 +91,16 @@ const embedPostInfoType = z.object({
   user: embedPostUserType,
 });
 
-const urlEmbedMapType = z.record(z.string(), z.object({
+export const urlEmbedMapType = z.record(z.string(), z.object({
   id: z.string(),
-  postInfo: embedPostInfoType,
+  postInfo: embedPostInfoType.optional(),
   type: z.string().optional(),
   html: z.string().optional(),
+  url: z.string().pipe(z.url()).optional(),
+  host: z.string().optional(),
 }));
 
-const postBodyBlockType = z.object({
+export const postArticleBodyType = z.object({
   blocks: z.array(z.union([blockType])),
   embedMap: embedMapType,
   fileMap: fileMapType,
@@ -106,9 +108,13 @@ const postBodyBlockType = z.object({
   urlEmbedMap: urlEmbedMapType,
 });
 
-const postBodyType = z.object({
-  files: z.array(fileType).optional(),
-  images: z.array(imageType).optional(),
+export const postImageBodyType = z.object({
+  images: z.array(imageType),
+  text: z.string(),
+});
+
+export const postFileBodyType = z.object({
+  files: z.array(fileType),
   text: z.string(),
 });
 
@@ -118,17 +124,32 @@ const userType = z.object({
   userId: z.string(),
 });
 
-const postType = z.object({
-  body: z.union([postBodyType, postBodyBlockType]),
-  coverImageUrl: z.string().pipe(z.url()),
+const postInfoDetailType = z.object({
+  coverImageUrl: z.string().pipe(z.url()).nullable(),
   creatorId: z.string(),
   id: z.string(),
   publishedDatetime: z.string().pipe(z.coerce.date()),
   updatedDatetime: z.string().pipe(z.coerce.date()),
   title: z.string(),
-  type: z.string(),
   user: userType,
 });
+
+export const postArticleType = postInfoDetailType.extend({
+  type: z.literal(['article']),
+  body: postArticleBodyType,
+});
+
+export const postImageType = postInfoDetailType.extend({
+  type: z.literal(['image']),
+  body: postImageBodyType,
+});
+
+export const postFileType = postInfoDetailType.extend({
+  type: z.literal(['file']),
+  body: postFileBodyType,
+});
+
+const postType = z.union([postArticleType, postImageType, postFileType]);
 
 const postInfoBodyType = z.object({
   post: postType

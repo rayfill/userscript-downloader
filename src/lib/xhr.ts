@@ -1,6 +1,6 @@
 import { parse } from 'content-disposition';
 
-type XHRResult = {
+export type XHRResult = {
   data: Blob;
   filename?: string;
 };
@@ -89,6 +89,7 @@ export function get<T extends object>(url: string, {
           resolve(result);
           return;
         } catch (e) {
+          debugger;
           console.error(e);
           reject(e);
         }

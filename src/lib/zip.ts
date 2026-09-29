@@ -10,8 +10,8 @@ type QueueContent = {
 } | {
   type: 'eos';
 };
-type CallbackType = (zip: Zip) => void | Promise<void>;
-export function createZipData(callback: CallbackType): AsyncIterable<Blob> {
+export type ZipCallbackType = (zip: Zip) => void | Promise<void>;
+export function createZipData(callback: ZipCallbackType): AsyncIterable<Blob> {
 
   const queue = new AsyncQueue<QueueContent>();
   const zip = new Zip((err, data, final) => {

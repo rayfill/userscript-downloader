@@ -8,9 +8,9 @@ interface ResponseTypeMap {
   arraybuffer: ArrayBuffer;
   blob: Blob;
   document: Document;
-  json: unknown;
+  json: object;
 };
-type LoadArgsType = ['text', ResponseTypeMap['text'], url: string, contentType: string | null] |
+export type LoadArgsType = ['text', ResponseTypeMap['text'], url: string, contentType: string | null] |
 ['arraybuffer', ResponseTypeMap['arraybuffer'], url: string, contentType: string | null] |
 ['blob', ResponseTypeMap['blob'], url: string, cnotentType: string | null] |
 ['document', ResponseTypeMap['document'], url: string, contentType: string | null] |
@@ -35,6 +35,22 @@ export function addHook(hook: HookHandlerType) {
   removeHook(hook);
   hooks.push(hook);
 }
+
+export async function toJson(args: LoadArgsType): Promise<unknown> {
+  const [type, data] = args;
+  switch (type) {
+    case 'arraybuffer':
+      return JSON.parse(Buffer.from(data as ArrayBuffer).toString());
+    case 'blob':
+      return JSON.parse(await (data as Blob).text());
+    case 'text':
+      return JSON.parse(data as string);
+    case 'json':
+      return data as unknown;
+    default:
+      throw new Error('invalid response type');
+  }
+};
 
 
 // export function HookFetch() {

@@ -3,11 +3,10 @@ import { findCloseButton, findLightboxImage } from './patreon/control.js';
 import { createZipData } from './lib/zip.js';
 import { download } from './lib/download.js';
 import { htmlWrapper } from './lib/html-wapper.js';
+import { toSafename, zeroPadding } from './lib/names.js';
 import { ZipDeflate, ZipPassThrough, type Zip } from 'fflate/browser';
 import { saveAs } from 'file-saver';
 import { Buffer } from 'buffer';
-
-
 
 async function getImageUrls(imgs: Array<HTMLImageElement>) {
   if (imgs.length === 0) {
@@ -55,14 +54,6 @@ async function getImageUrls(imgs: Array<HTMLImageElement>) {
   }
 
   return urls;
-}
-
-function toSafename(original: string): string {
-  return original.replaceAll(/[\/\\:*?"<>|]/g, '_');
-}
-
-function zeroPadding(source: string, len: number) {
-  return `${'0'.repeat(len)}${source}`.slice(-len);
 }
 
 async function handle() {
@@ -149,4 +140,10 @@ window.addEventListener('DOMContentLoaded', () => {
   button.style.right = '20px';
   button.style.zIndex = '1000';
   window.document.body.appendChild(button);
+  // hydrationによって上書きされてしまった場合の再マウント
+  requestIdleCallback(() => {
+    if (button.parentElement === null) {
+      window.document.body.appendChild(button);
+    }
+  });
 });

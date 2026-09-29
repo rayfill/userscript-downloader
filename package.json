@@ -16,14 +16,14 @@
     "content-disposition": "^3.0.0",
     "fflate": "^0.8.3",
     "file-saver": "^2.0.5",
-    "nextjs-hydration-parser": "^0.1.0",
-    "react-server-dom-webpack": "^19.2.8",
+    "idb": "^8.0.3",
     "zod": "^4.5.4"
   },
   "devDependencies": {
     "@types/file-saver": "^2.0.7",
     "@types/node": "^26.4.0",
     "@types/tampermonkey": "^5.5.0",
+    "@types/wicg-file-system-access": "^2023.10.7",
     "tsx": "^4.23.13",
     "typescript": "^7.0.2"
   },

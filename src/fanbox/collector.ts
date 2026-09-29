@@ -11,7 +11,7 @@ export function getPostId(url: string) {
   return matches.groups!.postId!;
 }
 
-const postInfoPattern = /^https:\/\/api\.fanbox\.cc\/post\.info\?postId=(?<postId>[0-9]+)$/;
+export const postInfoPattern = /^https:\/\/api\.fanbox\.cc\/post\.info\?postId=(?<postId>[0-9]+)$/;
 
 type ResponseType = 'text' | 'json' | 'arraybuffer' | 'blob';
 type ResponseDataTypeMap = {
@@ -54,9 +54,14 @@ async function postInfoHandler<T extends ResponseType>(type: T, data: ResponseDa
     const parsed = await postInfoType.safeParseAsync(jsonData);
     if (parsed.success) {
       postInfoMap.set(postId, parsed.data);
-      console.log(postInfoMap);
+      console.log(JSON.stringify(parsed.data, null, 2));
+    } else {
+      debugger;
+      console.error('parse error');
+      console.error(parsed.error.message);
     }
   } catch (e) {
+    debugger;
     console.error(e);
   }
 }
@@ -64,7 +69,10 @@ async function postInfoHandler<T extends ResponseType>(type: T, data: ResponseDa
 const hook: HookHandlerType = {
   load(type, data, url, contentType) {
     if (type !== 'document' && contentType !== null) {
-      postInfoHandler(type, data, url, contentType).catch((e) => console.error(e));
+      postInfoHandler(type, data, url, contentType).catch((e) => {
+        debugger;
+        console.error(e);
+      });
     }
   }
 };

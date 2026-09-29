@@ -1,0 +1,14 @@
+// ==UserScript==
+// @name         Twitter downloader
+// @namespace    https://twitter.com/
+// @version      {{version}}
+// @description  twitter tweet downloader
+// @downloadURL  {{downloadUrl}}
+// @author       rayfill
+// @match        https://x.com/*
+// @connect      x.com
+// @connect      pbs.twimg.com
+// @run-at       document-start
+// @grant        GM_xmlhttpRequest
+// @grant        unsafeWindow
+// ==/UserScript==
